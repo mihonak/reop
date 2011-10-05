@@ -8,7 +8,7 @@
 	B.insertBefore(P=D.createElement('div'),H);
 	P.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9998;width:300px;padding:10px;text-align:left;color:#fff;background:#000;border:#fff solid 2px;opacity:0.5;';
 	P.innerHTML = '<input id="c1" type="checkbox" value="[a-z]+" /><label for="c1">アルファベット</label>';
-	P.innerHTML += '<br /><input id="c2" type="checkbox" value="[ア-タダ-ヶー]+" /><label for="c2">カタカナ</label>';
+	P.innerHTML += '<br /><input id="c2" type="checkbox" value="[ァ-タダ-ヶー]+" /><label for="c2">カタカナ</label>';
 	P.innerHTML += '<br /><input id="c3" type="checkbox" value=" +" /><label for="c3">半角スペース</label>';
 	P.innerHTML += '<br /><input id="c4" type="checkbox" value="　+" /><label for="c4">全角スペース</label>';
 	P.innerHTML += '<br /><input id="c5" type="checkbox" value="[0-9]+" /><label for="c5">半角数字</label>';
