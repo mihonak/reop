@@ -29,11 +29,11 @@
 		markOn:function(id,text,textType,color){
 			var self = this;
 			var s = '[REOP-array-separator]',t = H.innerHTML.replace(new RegExp('(<)','ig'),s+'$1').replace(new RegExp('(>)','ig'),'$1'+s).split(s);
-			for(i=0;i<t.length;i++){
+			for(var i=0;i<t.length;i++){
 				if(t[i].substr(0,1)=='<'){//do nothing for HTML tags
 				}else{
 					t.splice(i,1,t[i].replace(new RegExp('(&.{2,4};)','ig'),s+'$1'+s).split(s));
-					for(j=0;j<t[i].length;j++){
+					for(var j=0;j<t[i].length;j++){
 						if(t[i][j].substr(0,1)!='&'){
 							t[i][j] = t[i][j].replace(new RegExp('('+self.textType+')','ig'),'<span class="'+self.id+'">$1</span>');
 						}
@@ -59,26 +59,37 @@
 	/*-------------------------------------------------------------------*/
 	var Panel = function(){
 		this.elem = D.createElement('div');
+		this.elem.className = 'REOP-controler movable';
 		this.create = function(){
 			var self = this;
 			S = D.createElement('style');
-			for(i=0;i<patterns.length;i++){
+			for(var i=0;i<patterns.length;i++){
 				S.innerHTML += 'span.'+patterns[i].id+'{background:'+patterns[i].color+';}';
 			}
+			S.innerHTML += '.REOP-controler p{margin:5px 0;}.REOP-controler input,.REOP-controler label{margin-right:5px;vertical-align:middle;}';
 			D.head.appendChild(S);
 			B.innerHTML = '<div id="REOP-HighLightArea">'+B.innerHTML+'</div>';
 			H = D.getElementById('REOP-HighLightArea');
 			B.insertBefore(self.elem,H);
-			self.elem.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9998;width:300px;padding:10px;text-align:left;color:#fff;background:#000;border:#fff solid 2px;opacity:0.5;';
-			for(i=0;i<patterns.length;i++){
+			self.elem.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9998;width:300px;padding:0 10px 10px;text-align:left;color:#fff;background:#000;border:#fff solid 2px;opacity:0.7;';
+			self.elem.innerHTML = '<div class="movable_controller" style="height:10px;margin:0 -10px 10px;background:#ccc;cursor:move;"></div>';
+			for(var i=0;i<patterns.length;i++){
 				self.elem.appendChild(patterns[i].elem);
 			}
-		};
-		this.draggable = function(){
-			
 		};
 	};
 	var panel = new Panel();
 	panel.create();
+
+	//ElementMover
+	/*-------------------------------------------------------------------*/
+	(function(){
+		var s = D.createElement('script');
+		s.setAttribute('type', 'text/javascript');
+		s.setAttribute('charset', 'utf-8');
+		s.setAttribute('src', 'http://mihonak.github.com/reop/element_mover-1.0.js');
+		B.appendChild(s);
+	})();
+
 
 })();
