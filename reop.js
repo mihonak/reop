@@ -1,6 +1,9 @@
 (function(){
 	var D = document,B = D.body,H,S,ORG  = B.innerHTML;
 
+	var scrollTopLength = function(){return (D.documentElement.scrollTop || B.scrollTop);};
+	var positionY = scrollTopLength() + 10;
+
 	//Marker class (prototype)
 	/*-------------------------------------------------------------------*/
 	var Marker = function(id,text,textType,color){
@@ -67,7 +70,7 @@
 			for(var i=0;i<patterns.length;i++){
 				S.innerHTML += 'span.'+patterns[i].id+'{background:'+patterns[i].color+';}';
 			}
-			S.innerHTML += '.REOP-ctrl{position:fixed;top:10px;right:10px;z-index:9998;width:200px;padding:0 10px 10px;text-align:left;color:#fff;background:#000;opacity:0.7;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);border-radius:3px;}';
+			S.innerHTML += '.REOP-ctrl{position:fixed;top:'+positionY+'px;right:10px;z-index:9998;width:200px;padding:0 10px 10px;text-align:left;color:#fff;background:#000;opacity:0.7;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);border-radius:3px;}';
 			S.innerHTML += '.REOP-ctrl p{margin:5px 0;}.REOP-ctrl input,.REOP-ctrl label{margin-right:5px;vertical-align:middle;}';
 			S.innerHTML += '.REOP-ctrl div{margin:0 -10px 10px;padding:2px;background:#333;cursor:move;text-align:right;border-radius:3px;}.REOP-ctrl span{cursor:pointer;}'
 			D.head.appendChild(S);
