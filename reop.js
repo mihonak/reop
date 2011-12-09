@@ -1,5 +1,5 @@
 (function(){
-	var D = document,B = D.body,H,S;
+	var D = document,B = D.body,H,S,ORG  = B.innerHTML;
 
 	//Marker class (prototype)
 	/*-------------------------------------------------------------------*/
@@ -49,37 +49,48 @@
 		}
 	}
 	var patterns = [];
-	patterns[0] = new Marker('c1','アルファベット','[a-z]+','#9f9');
-	patterns[1] = new Marker('c2','カタカナ','[ァ-タダ-ヶー]+','#99f');
-	patterns[2] = new Marker('c3','半角スペース',' +','#f99');
-	patterns[3] = new Marker('c4','全角スペース','　+','#ee0');
-	patterns[4] = new Marker('c5','半角数字','[0-9]+','#6ee');
+	patterns[0] = new Marker('REOP1','アルファベット','[a-z]+','#9f9');
+	patterns[1] = new Marker('REOP2','カタカナ','[ァ-タダ-ヶー]+','#99f');
+	patterns[2] = new Marker('REOP3','半角スペース',' +','#f99');
+	patterns[3] = new Marker('REOP4','全角スペース','　+','#ee0');
+	patterns[4] = new Marker('REOP5','半角数字','[0-9]+','#6ee');
 	
 	//Panel class (constructor)
 	/*-------------------------------------------------------------------*/
 	var Panel = function(){
 		this.elem = D.createElement('div');
-		this.elem.className = 'REOP-controler movable';
+		this.elem.className = 'REOP-ctrl movable';
 		this.create = function(){
 			var self = this;
 			S = D.createElement('style');
+			S.setAttribute('id','REOP-style');
 			for(var i=0;i<patterns.length;i++){
 				S.innerHTML += 'span.'+patterns[i].id+'{background:'+patterns[i].color+';}';
 			}
-			S.innerHTML += '.REOP-controler p{margin:5px 0;}.REOP-controler input,.REOP-controler label{margin-right:5px;vertical-align:middle;}';
+			S.innerHTML += '.REOP-ctrl{position:fixed;top:10px;right:10px;z-index:9998;width:200px;padding:0 10px 10px;text-align:left;color:#fff;background:#000;opacity:0.7;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);border-radius:3px;}';
+			S.innerHTML += '.REOP-ctrl p{margin:5px 0;}.REOP-ctrl input,.REOP-ctrl label{margin-right:5px;vertical-align:middle;}';
+			S.innerHTML += '.REOP-ctrl div{margin:0 -10px 10px;padding:2px;background:#333;cursor:move;text-align:right;border-radius:3px;}.REOP-ctrl span{cursor:pointer;}'
 			D.head.appendChild(S);
 			B.innerHTML = '<div id="REOP-HighLightArea">'+B.innerHTML+'</div>';
 			H = D.getElementById('REOP-HighLightArea');
 			B.insertBefore(self.elem,H);
-			self.elem.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9998;width:300px;padding:0 10px 10px;text-align:left;color:#fff;background:#000;border:#fff solid 2px;opacity:0.7;';
-			self.elem.innerHTML = '<div class="movable_controller" style="height:10px;margin:0 -10px 10px;background:#ccc;cursor:move;"></div>';
+			self.elem.innerHTML = '<div class="movable_controller"><span id="REOP-close">閉じる</span></div>';
 			for(var i=0;i<patterns.length;i++){
 				self.elem.appendChild(patterns[i].elem);
 			}
 		};
+		this.remove = function(){
+			D.getElementById('REOP-close').onclick = function(){
+				D.head.removeChild(D.getElementById('reop'));
+				D.head.removeChild(D.getElementById('REOP-style'));
+				B.innerHTML = ORG;
+			}
+			
+		};
 	};
 	var panel = new Panel();
 	panel.create();
+	panel.remove();
 
 	//ElementMover
 	/*-------------------------------------------------------------------*/
